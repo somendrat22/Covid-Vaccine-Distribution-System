@@ -3,6 +3,8 @@ package com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Ba
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.models.Doctor;
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +20,8 @@ public class DoctorController {
     DoctorService doctorService;
 
     @PostMapping("/register")
-    public Doctor registerDoctor(@RequestBody Doctor obj){
+    public String registerDoctor(@RequestBody Doctor obj){
         Doctor doctor = doctorService.registerDoctor(obj);
-        return doctor;
+        return "Doctor got created";
     }
 }

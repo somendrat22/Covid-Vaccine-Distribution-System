@@ -19,7 +19,7 @@ public class Patient {
     String name;
     String gender;
     @Column(unique = true)
-    int aadharNumber;
+    String aadharNumber;
     int doseCount;
     String vaccinationPrefrence;
     String address;

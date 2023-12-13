@@ -13,7 +13,7 @@ public class PatientSignupDTO {
     String email;
     String password;
     String aadharNumber;
-    String phoneNumber;
+    long phoneNumber;
     String gender;
     VaccinationPrefrence vaccinationPrefrence; // Sputnik, Covaxin, Covishield, xyz
     String address;

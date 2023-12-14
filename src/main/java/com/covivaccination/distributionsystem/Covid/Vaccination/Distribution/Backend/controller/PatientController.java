@@ -3,6 +3,7 @@ package com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Ba
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.dto.request.PatientLoginDTO;
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.dto.request.PatientSignupDTO;
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.dto.response.GeneralMessageDTO;
+import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.enums.VaccinationCenterPrefrence;
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.exceptions.PatientDoesNotExistException;
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.exceptions.WrongCredentials;
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.models.Patient;
@@ -37,4 +38,10 @@ public class PatientController {
             return new ResponseEntity(new GeneralMessageDTO(patientDoesNotExistException.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/createappointment")
+    public ResponseEntity createAppointment(@RequestParam String email, @RequestParam VaccinationCenterPrefrence vaccinationCenterPrefrence){
+
+    }
+
 }

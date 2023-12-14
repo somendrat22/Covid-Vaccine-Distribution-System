@@ -39,5 +39,20 @@ public class PatientService {
         }
         return patient;
     }
+
+    public void createAppointment(String email, String vaccinationCenterPrefrence){
+        // 1. get patient by email
+        Patient p = patientRepository.getPatientByEmail(email);
+        // 2. Identify patient vaccination prefrence
+        String vPrefrence = p.getVaccinationPrefrence();
+        if(vPrefrence.equals("Sputnik")){
+            // example vcPrefrence = Govt and vPrefrence = Sputnik ->
+            // You have to find all the govt vaccination centers who are having not zero sputnik vaccine
+        }else if(vPrefrence.equals("Covishield")){
+
+        }else if(vPrefrence.equals("Covaxin")){
+
+        }
+    }
     
 }

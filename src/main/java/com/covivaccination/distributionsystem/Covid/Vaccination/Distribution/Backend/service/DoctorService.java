@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.print.Doc;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class DoctorService {
@@ -26,5 +27,9 @@ public class DoctorService {
         vaccinationCenterService.updateDocCountByOne(vaccinationCenter);
         doctorRepository.save(obj);
         return obj;
+    }
+
+    public List<Doctor> getMinimumDoctorOnTheBasisOfVC(UUID vcid){
+        return doctorRepository.getMinimumDoctorOnTheBasisOfVC(vcid);
     }
 }

@@ -4,15 +4,26 @@ import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Bac
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.dto.request.PatientSignupDTO;
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.exceptions.PatientDoesNotExistException;
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.exceptions.WrongCredentials;
+import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.models.Doctor;
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.models.Patient;
+import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.models.VaccinationCenter;
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PatientService {
     @Autowired
     PatientRepository patientRepository;
+
+    @Autowired
+    VaccinationCenterService vaccinationCenterService;
+
+    @Autowired
+    DoctorService doctorService;
 
     public Patient signUp(PatientSignupDTO patientSignupDTO){
         Patient patient = new Patient();
@@ -45,14 +56,20 @@ public class PatientService {
         Patient p = patientRepository.getPatientByEmail(email);
         // 2. Identify patient vaccination prefrence
         String vPrefrence = p.getVaccinationPrefrence();
-        if(vPrefrence.equals("Sputnik")){
-            // example vcPrefrence = Govt and vPrefrence = Sputnik ->
-            // You have to find all the govt vaccination centers who are having not zero sputnik vaccine
-        }else if(vPrefrence.equals("Covishield")){
+        List<VaccinationCenter> vcList = vaccinationCenterService.getMinimumVCOnTheBasisOfTypeAndPrefrence(vaccinationCenterPrefrence, vPrefrence);
+        // 3. Assigning 0th index vaccination center to patient
+        VaccinationCenter patientsVC = vcList.get(0);
+        // 4. Assign doctor who is handeling minimum number of patients to the current patient
+        List<Doctor> docList = doctorService.getMinimumDoctorOnTheBasisOfVC(patientsVC.getId());
+        // 5. Take out minimum doctor
+        Doctor patientDoctor = docList.get(0);
 
-        }else if(vPrefrence.equals("Covaxin")){
+        // HomeWork
+        // VaccinationCenter -> patients count + 1
+        // Doctor -> patientCount + 1
+        // Doctor -> List -> add patient -> Database -> Insert docId, pid into docvs patient table
+        // return response body -> patient details, patientc vc details, doctor details
 
-        }
     }
     
 }

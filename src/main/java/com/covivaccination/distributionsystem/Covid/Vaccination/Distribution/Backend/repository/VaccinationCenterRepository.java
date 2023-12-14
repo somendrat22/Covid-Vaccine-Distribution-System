@@ -16,13 +16,13 @@ public interface VaccinationCenterRepository extends JpaRepository<VaccinationCe
     @Query(value = "select * from vaccination_center where doctor_count = (select min(doctor_count) from vaccination_center)", nativeQuery = true)
     public List<VaccinationCenter> getMinimumDoctorVaccinationCenter();
 
-    @Query(value = "select * from vaccination_center where type=:type and covaxin_count != 0", nativeQuery = true)
+    @Query(value = "select * from vaccination_center where type=:type and covaxin_count != 0 and patients_count = (select min(patients_count) from vaccination_center)", nativeQuery = true)
     public List<VaccinationCenter> getAllVCOntheBasisOfTypeAndCovaxinCount(String type);
 
-    @Query(value = "select * from vaccination_center where type=:type and covishield_count != 0", nativeQuery = true)
+    @Query(value = "select * from vaccination_center where type=:type and covishield_count != 0 and patients_count = (select min(patients_count) from vaccination_center)", nativeQuery = true)
     public List<VaccinationCenter> getAllVcOntheBasisOfTypeAndCovishieldCount(String type);
 
-    @Query(value = "select * from vaccination_center where type=:type and sputnik_count != 0", nativeQuery = true)
+    @Query(value = "select * from vaccination_center where type=:type and sputnik_count != 0 and patients_count = (select min(patients_count) from vaccination_center)", nativeQuery = true)
     public List<VaccinationCenter> getAllVcOntheBasisOfTypeAndSputnikCount(String type);
 
     @Modifying

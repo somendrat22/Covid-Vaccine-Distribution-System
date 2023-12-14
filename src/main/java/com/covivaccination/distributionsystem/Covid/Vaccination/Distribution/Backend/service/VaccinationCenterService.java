@@ -29,4 +29,15 @@ public class VaccinationCenterService {
         int docCount =  vaccinationCenter.getDoctorCount() + 1;
         vaccinationCenterRepository.updateDocCountByOne(id, docCount);
     }
+
+    public List<VaccinationCenter> getMinimumVCOnTheBasisOfTypeAndPrefrence(String type, String prefrence){
+        if(prefrence.equals("Sputnik")){
+            return vaccinationCenterRepository.getAllVcOntheBasisOfTypeAndSputnikCount(type);
+        }else if(prefrence.equals("Covishield")){
+            return vaccinationCenterRepository.getAllVcOntheBasisOfTypeAndCovishieldCount(type);
+        }else{
+            return vaccinationCenterRepository.getAllVCOntheBasisOfTypeAndCovaxinCount(type);
+        }
+    }
+
 }

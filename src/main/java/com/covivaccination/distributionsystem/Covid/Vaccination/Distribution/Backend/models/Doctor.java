@@ -21,6 +21,6 @@ public class Doctor {
     @ManyToOne
     VaccinationCenter vaccinationCenter;
     int patientCount;
-    @OneToMany
+    @ManyToMany
     List<Patient> patients;
 }

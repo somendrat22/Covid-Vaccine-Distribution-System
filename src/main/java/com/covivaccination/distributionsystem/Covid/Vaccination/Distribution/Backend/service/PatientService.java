@@ -2,6 +2,7 @@ package com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Ba
 
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.dto.request.PatientLoginDTO;
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.dto.request.PatientSignupDTO;
+import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.dto.response.AppointmentDTO;
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.exceptions.PatientDoesNotExistException;
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.exceptions.WrongCredentials;
 import com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.models.Doctor;
@@ -51,7 +52,7 @@ public class PatientService {
         return patient;
     }
 
-    public void createAppointment(String email, String vaccinationCenterPrefrence){
+    public AppointmentDTO createAppointment(String email, String vaccinationCenterPrefrence){
         // 1. get patient by email
         Patient p = patientRepository.getPatientByEmail(email);
         // 2. Identify patient vaccination prefrence
@@ -70,6 +71,16 @@ public class PatientService {
         // Doctor -> List -> add patient -> Database -> Insert docId, pid into docvs patient table
         // return response body -> patient details, patientc vc details, doctor details
 
+        vaccinationCenterService.updatePatientCountByOne(patientsVC);
+        doctorService.updatePatientCountByOne(patientDoctor);
+        patientDoctor.getPatients().add(p);
+        doctorService.addPatientVsDoctor(p.getId(), patientDoctor.getId());
+        AppointmentDTO appointmentDTO = new AppointmentDTO();
+        appointmentDTO.setDoseNumber(p.getDoseCount() + 1);
+        appointmentDTO.setPatient(p);
+        appointmentDTO.setVaccinationCenter(patientsVC);
+        appointmentDTO.setDoctor(patientDoctor);
+        return appointmentDTO;
     }
     
 }

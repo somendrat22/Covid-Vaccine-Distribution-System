@@ -32,4 +32,14 @@ public class DoctorService {
     public List<Doctor> getMinimumDoctorOnTheBasisOfVC(UUID vcid){
         return doctorRepository.getMinimumDoctorOnTheBasisOfVC(vcid);
     }
+
+    public void updatePatientCountByOne(Doctor doctor){
+        UUID id = doctor.getId();
+        int patientCount = doctor.getPatientCount() + 1;
+        doctorRepository.updatePatientCountByOne(id, patientCount);
+    }
+
+    public void addPatientVsDoctor(UUID patientId, UUID doctorId){
+        doctorRepository.insertIntoDoctorVsPatientsTable(doctorId, patientId);
+    }
 }

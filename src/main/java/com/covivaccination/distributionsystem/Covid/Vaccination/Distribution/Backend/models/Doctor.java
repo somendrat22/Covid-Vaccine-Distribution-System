@@ -1,5 +1,6 @@
 package com.covivaccination.distributionsystem.Covid.Vaccination.Distribution.Backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,6 +20,7 @@ public class Doctor {
     String name;
     String docDegree;
     @ManyToOne
+    @JsonIgnore
     VaccinationCenter vaccinationCenter;
     int patientCount;
     @ManyToMany
